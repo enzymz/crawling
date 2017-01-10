@@ -47,20 +47,20 @@ def export_():
     start = args_input_start()
     end = args_input_end()
     hos_detail = get_info_hos(start,end)
-    with open('/tmp/crawl12.csv','w') as f:
+    with open('/tmp/list_crawled.csv','w') as f:
         writer = csv.writer(f, lineterminator='\n')
         for val in hos_detail:
             writer.writerows([val])
 
 def args_input_start():
-    start = int(input('Put start range: '))
+    start = int(input('Put start range (min = 0): '))
     return start
 
 def args_input_end():
-    end = int(input('Put end range: '))
+    hospital = get_all_hos()
+    end = int(input('Put end range (max = {}): '.format(len(hospital))))
     return end
 
 if __name__ == "__main__":
-    
     export_()
 
