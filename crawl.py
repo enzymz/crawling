@@ -14,12 +14,13 @@ def get_all_hos():
         href = link.get('href')
         if href.find('/thong-tin') == 0:
             lst_hos.append(href)
+    lst_hos.append('/')
     return lst_hos
 
 
 def get_info_hos(start,end):
     hospitals = get_all_hos()
-    i = 0
+    ii = 0
     ls_hos_detail = [
         ['NAME','ADDRESS','PHONE','DESCRIPTION','MLat','MLong','LINK'],
     ]
@@ -35,11 +36,12 @@ def get_info_hos(start,end):
             desc = bs_desc.split('Giới thiệu:')[1].strip()
             maps_lat = r.split('google.maps.LatLng(')[1].split(',')[0]
             maps_long = r.split('google.maps.LatLng(')[1].split(',')[1].split(')')[0]
-        except: continue
-        hospital_name = r.split('function initialize()')[1].split('title: \'')[1].split('<br>')[0]
+        except: 
+            print(link,add,phone,pre_desc,bs_desc,desc,maps_lat,maps_long)
+        hospital_name = r.split('function initialize()')[1].split('title: ')[1].split('<br>')[0]
         ls_hos_detail.append([hospital_name, add, phone, desc, maps_lat, maps_long,link])
-        print(i)
-        i += 1
+        print(ii)
+        ii += 1
     return ls_hos_detail
 
 
@@ -58,7 +60,7 @@ def args_input_start():
 
 def args_input_end():
     hospital = get_all_hos()
-    end = int(input('Put end range (max = {}): '.format(len(hospital))))
+    end = int(input('Put end range (max = {}): '.format(len(hospital)-1)))
     return end
 
 if __name__ == "__main__":
